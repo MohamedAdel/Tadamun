@@ -132,7 +132,7 @@ include( TEMPLATEPATH.'/sidebar_left.php' );
 				</div> <!-- end #comments -->	
 
 		
-		
+			<?php
 				endwhile;
 			endif;				
 			?>

@@ -1,0 +1,140 @@
+<?php 
+get_header(); 
+include( TEMPLATEPATH.'/sidebar_left.php' ); 
+?>
+			<div id="right">
+				<div class="single-entry">
+				<?php
+				if (have_posts()) : 
+					while (have_posts()) : the_post();
+				?>	
+					<?php 
+						if ( has_post_thumbnail() ) {
+							echo "<div class='mb-5'>";
+							the_post_thumbnail( 'article' ); 
+							echo "</div>";
+						}
+					?>
+				</div> <!-- end .single-entry -->
+				<aside id="right_sidebar">
+					<div class="article_tax">
+						<div class="tags tax_areas widget">
+							<h3 class="nmb">Area</h3>
+							<!-- testing new git windows client "smartgit" -->
+							<div class="tags_list">
+								<?php 
+									$transliterations = wp_get_post_terms(get_the_ID(), 'transliterations');
+									if(!empty($transliterations)) { 
+										foreach( $transliterations as $transliteration ){ 
+											echo "<a href='".get_term_link($transliteration,"transliterations")."'>".$transliteration->name."</a>, ";
+										}
+									} else {
+										echo "<p class='nmb'>-</p>";
+									}
+								?>
+							</div>
+						</div> <!-- end .tags -->
+						<div class="tags tax_scales widget">
+							<h3 class="nmb">Scale</h3>
+							<div class="tags_list">
+								<?php 
+									$scales = wp_get_post_terms(get_the_ID(), 'scales');
+									if(!empty($scales)) { 
+										foreach( $scales as $scale ) echo "<a href='".get_term_link($scale,"scales")."'>".$scale->name."</a>, ";
+									} else {
+										echo "<p class='nmb'>-</p>";
+									}
+								?>
+							</div>
+						</div> <!-- end .tags -->
+						<div class="tags tax_topics widget">
+							<h3 class="nmb">Topics</h3>
+							<div class="tags_list">
+								<?php 
+									$topics = wp_get_post_terms(get_the_ID(), 'topics'); 
+									if(!empty($topics)) {
+										foreach( $topics as $topic ) echo "<a href='".get_term_link($topic,"topics")."'>".$topic->name."</a>, ";
+									} else {
+										echo "<p class='nmb'>-</p>";
+									}
+								?>
+							</div>
+						</div> <!-- end .tags -->
+						<div class="tags tax_tags widget">
+							<h3 class="nmb">Tags</h3>
+							<div class="tags_list">
+								<?php 
+									$tags = wp_get_post_terms(get_the_ID(), 'post_tag'); 
+									if(!empty($tags)) {
+										the_tags('',', ','');
+									} else {
+										echo "<p class='nmb'>-</p>";
+									}							
+								?>
+							</div>
+						</div> <!-- end .tags -->
+					</div> <!-- end .article_tax -->
+					<div class="social_share widget">
+						
+<!-- AddThis Button BEGIN -->
+<div class="addthis_toolbox addthis_default_style addthis_32x32_style">
+<a class="addthis_button_preferred_1"></a>
+<a class="addthis_button_preferred_2"></a>
+<a class="addthis_button_preferred_3"></a>
+<a class="addthis_button_preferred_4"></a>
+</div>
+
+<!-- 						<a href="javascript:if(window.print)window.print()"><img src="<?php bloginfo('template_directory'); ?>/images/icons/print-w.png" alt=""></a> -->
+<script type="text/javascript">var addthis_config = {"data_track_addressbar":true};</script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5284eea138dbe900"></script>
+<!--
+						<a href=""><img src="<?php bloginfo('template_directory'); ?>/images/icons/facebook-w.png" alt=""></a>
+						<a href="" class="twitter"><img src="<?php bloginfo('template_directory'); ?>/images/icons/twitter-w.png" alt=""></a>
+						<a href="" class="contact"><img src="<?php bloginfo('template_directory'); ?>/images/icons/contact-w.png" alt=""></a>
+-->
+						<div class="clr"></div>
+					</div> <!-- end .social_share -->
+				</aside> <!-- end #sidebar -->				
+				<div class="clr"></div>
+				<!-- <div class="article_entry new_article_layot article_container"> -->
+				<div class="article_entry article_container">
+					<h2 class="blue boxed_title"><?php the_title(); ?></h2>
+					<div class="article_content">
+						<?php
+							the_content('');
+							link_pages('<p><strong>Pages:</strong> ', '</p>', 'number'); 
+						?>
+						<div style="float:right;margin-right:10px"><?php _e('Published on'); ?> <?php the_date(); ?></div>
+
+<div style="clear:both"></div>
+<div id="smshare">
+					<!-- AddThis Button BEGIN -->
+<div class="addthis_toolbox addthis_default_style">
+<a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+<a class="addthis_button_tweet" tw:via="tad_cairo"></a>
+<a class="addthis_button_linkedin_counter"></a>
+<a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+</div>
+<script type="text/javascript">var addthis_config = {"data_track_addressbar":true};</script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=muhammad90"></script>
+<!-- AddThis Button END -->
+				</div> <!-- end #smshare -->
+
+					<div style="clear:both"></div>
+					</div>
+					<div class="clr"></div>
+				</div> <!-- end .entry -->	
+
+				<div id="comments">
+					<h3><?php _e('Comments','comments'); ?></h3>
+
+					<?php comments_template( '', true ); ?>
+				</div> <!-- end #comments -->	
+
+		
+			<?php
+				endwhile;
+			endif;				
+			?>
+			</div> <!-- end #right -->	
+<?php get_footer(); ?>
